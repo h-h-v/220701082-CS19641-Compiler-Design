@@ -101,7 +101,19 @@ int main(){
 		lexemiser(line, &table);
 		printf("\n\033[4mLine %d\033[0m\n",lc);
 		while(table != NULL){
-		printf("~> %s %d\n",table->value,table->type);
+		printf("~> %s ",table->value);
+		if(table->type == 1){
+			printf("Keyword\n");
+		}
+		if(table->type == 6){
+			printf("Identifier\n");
+		}
+		if(table->type == 7){
+			printf("Number\n");
+		}
+		if(table->type ==8){
+			printf("Operator\n");
+		}
 		table = table->next;
 		}
 	}
