@@ -1,13 +1,16 @@
 %{
 #include "y.tab.h"
+#include <stdlib.h>
 extern int yylval;
+void yyerror(const char *);
 %}
 
-%%
-[0-9]+    { yylval = atoi(yytext); return NUMBER; }
-[+]       { return PLUS; }
-[\n]      { return 0; }
-[ \t]     ;   // ignore spaces
-.         { /* ignore any other character */ }
-%%
+%option noyywrap
 
+%%
+[0-9]+     { yylval = atoi(yytext); return NUMBER; }
+"+"        { return '+'; }
+"*"        { return '*'; }
+"\n"       { return '\n'; }
+[ \t]+     { /* ignore whitespace */ }
+.          { yyerror("Invalid character"); }

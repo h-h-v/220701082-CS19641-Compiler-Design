@@ -23,9 +23,8 @@
 #line 2 "var.y"
 #include <stdio.h>
 #include <stdlib.h>
-int yylex();
-void yyerror(const char *s);
-#line 29 "y.tab.c"
+extern char *yytext;
+#line 28 "y.tab.c"
 
 #if ! defined(YYSTYPE) && ! defined(YYSTYPE_IS_DECLARED)
 /* Default: YYSTYPE is the semantic value type. */
@@ -68,59 +67,45 @@ int YYLEX_DECL();
 
 extern int YYPARSE_DECL();
 
-#define NUMBER 257
+#define IDENTIFIER 257
 #define YYERRCODE 256
 typedef int YYINT;
 static const YYINT yylhs[] = {                           -1,
-    0,    1,    1,    1,
+    0,
 };
 static const YYINT yylen[] = {                            2,
-    2,    3,    3,    1,
+    1,
 };
 static const YYINT yydefred[] = {                         0,
-    4,    0,    0,    0,    0,    1,    0,    3,
+    1,    0,
 };
 #if defined(YYDESTRUCT_CALL) || defined(YYSTYPE_TOSTRING)
 static const YYINT yystos[] = {                           0,
-  257,  259,  260,   43,   42,   10,  260,  260,
+  257,  259,
 };
 #endif /* YYDESTRUCT_CALL || YYSTYPE_TOSTRING */
 static const YYINT yydgoto[] = {                          2,
-    3,
 };
-static const YYINT yysindex[] = {                      -253,
-    0,    0,  -10, -253, -253,    0,  -37,    0,
+static const YYINT yysindex[] = {                      -257,
+    0,    0,
 };
 static const YYINT yyrindex[] = {                         0,
-    0,    0,    0,    0,    0,    0,   -9,    0,
+    0,    0,
 };
 #if YYBTYACC
 static const YYINT yycindex[] = {                         0,
-    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,
 };
 #endif
 static const YYINT yygindex[] = {                         0,
-   -2,
 };
-#define YYTABLESIZE 34
-static const YYINT yytable[] = {                          6,
-    2,    7,    8,    1,    5,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    5,    4,    2,
+#define YYTABLESIZE 0
+static const YYINT yytable[] = {                          1,
 };
-static const YYINT yycheck[] = {                         10,
-   10,    4,    5,  257,   42,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   42,   43,   43,
+static const YYINT yycheck[] = {                        257,
 };
 #if YYBTYACC
 static const YYINT yyctable[] = {                        -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,
 };
 #endif
 #define YYFINAL 2
@@ -128,7 +113,7 @@ static const YYINT yyctable[] = {                        -1,
 #define YYDEBUG 0
 #endif
 #define YYMAXTOKEN 257
-#define YYUNDFTOKEN 261
+#define YYUNDFTOKEN 260
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
 #ifndef NULL
@@ -136,9 +121,7 @@ static const YYINT yyctable[] = {                        -1,
 #endif
 static const char *const yyname[] = {
 
-"$end",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,"'\\n'",NULL,NULL,NULL,NULL,
-NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
-NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,"'*'","'+'",NULL,NULL,
+"$end",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
 NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
 NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
 NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
@@ -152,14 +135,13 @@ NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
 NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
 NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
 NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
-NULL,NULL,"error","NUMBER","$accept","input","expression","illegal-symbol",
+NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+NULL,"error","IDENTIFIER","$accept","stmt","illegal-symbol",
 };
 static const char *const yyrule[] = {
-"$accept : input",
-"input : expression '\\n'",
-"expression : expression '+' expression",
-"expression : expression '*' expression",
-"expression : NUMBER",
+"$accept : stmt",
+"stmt : IDENTIFIER",
 
 };
 #endif
@@ -291,17 +273,17 @@ static YYINT  *yylexp = NULL;
 
 static YYINT  *yylexemes = NULL;
 #endif /* YYBTYACC */
-#line 24 "var.y"
+#line 15 "var.y"
+void yyerror(const char *msg) {
+    printf("Invalid variable\n");
+}
+
 int main() {
-    printf("Enter an arithmetic expression:\n");
+    printf("Enter a variable name: ");
     yyparse();
     return 0;
 }
-
-void yyerror(const char *s) {
-    fprintf(stderr, "Error: %s\n", s);
-}
-#line 305 "y.tab.c"
+#line 287 "y.tab.c"
 
 /* For use in generated program */
 #define yydepth (int)(yystack.s_mark - yystack.s_base)
@@ -972,26 +954,11 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 14 "var.y"
-	{ printf("Result = %d\n", yystack.l_mark[-1]); }
-#line 978 "y.tab.c"
+#line 11 "var.y"
+	{ printf("Valid variable: %s\n", yytext); }
+#line 960 "y.tab.c"
 break;
-case 2:
-#line 18 "var.y"
-	{ yyval = yystack.l_mark[-2] + yystack.l_mark[0]; }
-#line 983 "y.tab.c"
-break;
-case 3:
-#line 19 "var.y"
-	{ yyval = yystack.l_mark[-2] * yystack.l_mark[0]; }
-#line 988 "y.tab.c"
-break;
-case 4:
-#line 20 "var.y"
-	{ yyval = yystack.l_mark[0]; }
-#line 993 "y.tab.c"
-break;
-#line 995 "y.tab.c"
+#line 962 "y.tab.c"
     default:
         break;
     }

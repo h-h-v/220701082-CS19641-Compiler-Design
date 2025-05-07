@@ -1,36 +1,68 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-int yylex();
+void yyerror(const char *s);
+int yylex(void);
 %}
-
-%token NUMBER
-%token PLUS
-
+%token IF ELSE FOR WHILE SWITCH CASE IDENTIFIER REL_OP ARITH_OP
+%token LPAREN RPAREN LBRACE RBRACE SEMICOLON
+%start program
 %%
-expr:
-    expr PLUS term   { $$ = $1 + $3; }
-  | term             { $$ = $1; }
-  ;
-
-term:
-    NUMBER           { $$ = $1; }
-  ;
-
+program:
+ statement
+ | program statement
+ ;
+statement:
+ if_statement
+ | for_loop
+ | while_loop
+ | switch_case
+ ;
+41
+if_statement:
+ IF LPAREN condition RPAREN LBRACE statements RBRACE
+ | IF LPAREN condition RPAREN LBRACE statements RBRACE ELSE LBRACE
+statements RBRACE
+ ;
+for_loop:
+ FOR LPAREN assignment SEMICOLON condition SEMICOLON assignment RPAREN
+LBRACE statements RBRACE
+ ;
+while_loop:
+ WHILE LPAREN condition RPAREN LBRACE statements RBRACE
+ ;
+switch_case:
+ SWITCH LPAREN expression RPAREN LBRACE case_statements RBRACE
+ ;
+case_statements:
+ CASE expression COLON statements
+ | case_statements CASE expression COLON statements
+ | case_statements DEFAULT COLON statements
+ ;
+condition:
+ IDENTIFIER REL_OP IDENTIFIER
+ | IDENTIFIER REL_OP NUMBER
+ | NUMBER REL_OP IDENTIFIER
+ | NUMBER REL_OP NUMBER
+ ;
+assignment:
+ IDENTIFIER '=' expression
+ ;
+expression:
+ IDENTIFIER
+ | NUMBER
+ | expression ARITH_OP expression
+ ;
+statements:
+ statement
+ | statements statement
+ ;
 %%
-
+void yyerror(const char *s) {
+ fprintf(stderr, "Error: %s\n", s);
+}
 int main() {
-    printf("Enter an expression:\n");
-    yyparse();
-    return 0;
+ printf("Enter C control structures for validation:\n");
+ yyparse();
+ return 0;
 }
-
-int yyerror(char *s) {
-    printf("Error: %s\n", s);
-    return 0;
-}
-
-int yywrap() {
-    return 1;
-}
-
